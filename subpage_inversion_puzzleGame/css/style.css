@@ -1,0 +1,428 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #2c3e50;
+  color: #ecf0f1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  max-width: 600px;
+  width: 100%;
+}
+
+header {
+  text-align: center;
+  width: 100%;
+}
+
+header h1 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+  color: #3498db;
+}
+
+#editor-link {
+  color: #3498db;
+  text-decoration: none;
+  font-size: 0.9rem;
+  margin-top: 5px;
+  display: inline-block;
+}
+
+#editor-link:hover {
+  text-decoration: underline;
+}
+
+#status-bar {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.1rem;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+#turn-display, #color-display {
+  background: #34495e;
+  padding: 8px 15px;
+  border-radius: 5px;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+#game-canvas {
+  border: 3px solid #34495e;
+  border-radius: 8px;
+  background: #ecf0f1;
+  max-width: 100%;
+}
+
+#game-area {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+}
+
+#d-pad {
+  display: grid;
+  grid-template-columns: repeat(3, 52px);
+  grid-template-rows: repeat(3, 52px);
+  gap: 0;
+  align-content: center;
+  user-select: none;
+  -webkit-user-select: none;
+  flex-shrink: 0;
+}
+
+.d-pad-btn {
+  width: 52px;
+  height: 52px;
+  font-size: 1rem;
+  background: #34495e;
+  color: white;
+  border: 2px solid #2c3e50;
+  border-radius: 6px;
+  cursor: pointer;
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.d-pad-btn:active {
+  background: #2980b9;
+}
+
+.d-pad-spacer,
+.d-pad-center {
+  width: 52px;
+  height: 52px;
+}
+
+#controls-dpad {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+}
+
+#controls {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  max-width: 400px;
+}
+
+#d-pad-portrait {
+  display: none;
+}
+
+#controls button {
+  flex: 1;
+  padding: 12px;
+  font-size: 1rem;
+  background: #3498db;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#controls button:hover {
+  background: #2980b9;
+}
+
+#level-select {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  z-index: 100;
+}
+
+#level-select h2 {
+  font-size: 2rem;
+  color: #3498db;
+  margin-bottom: 20px;
+}
+
+#level-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  max-width: 400px;
+}
+
+.level-button {
+  width: 60px;
+  height: 60px;
+  font-size: 1.2rem;
+  background: #34495e;
+  color: white;
+  border: 2px solid #3498db;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.level-button:hover {
+  background: #3498db;
+}
+
+/* AI追加レベルボタン */
+.level-button.ai-level-btn {
+  background: #8e44ad;
+  border-color: #9b59b6;
+  grid-column: span 5;
+  width: 100%;
+  height: auto;
+  padding: 12px;
+  font-size: 1rem;
+}
+
+.level-button.ai-level-btn:hover {
+  background: #9b59b6;
+}
+
+.level-button.ai-month-btn {
+  background: #27ae60;
+  border-color: #2ecc71;
+  grid-column: span 5;
+  width: 100%;
+  height: auto;
+  padding: 12px;
+  font-size: 1rem;
+}
+
+.level-button.ai-month-btn:hover {
+  background: #2ecc71;
+}
+
+.level-button.ai-day-btn {
+  background: #16a085;
+  border-color: #1abc9c;
+  grid-column: span 5;
+  width: 100%;
+  height: auto;
+  padding: 12px;
+  font-size: 1rem;
+}
+
+.level-button.ai-day-btn:hover {
+  background: #1abc9c;
+}
+
+.level-button.back-btn {
+  background: #7f8c8d;
+  border-color: #95a5a6;
+  grid-column: span 5;
+  width: 100%;
+  height: auto;
+  padding: 12px;
+  font-size: 1rem;
+}
+
+.level-button.back-btn:hover {
+  background: #95a5a6;
+}
+
+#message-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 200;
+}
+
+#message-box {
+  background: #34495e;
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  min-width: 300px;
+}
+
+#message-title {
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+  color: #3498db;
+}
+
+#message-text {
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+}
+
+#message-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#message-buttons button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  background: #3498db;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#message-buttons button:hover {
+  background: #2980b9;
+}
+
+.hidden {
+  display: none !important;
+}
+
+#help-section {
+  background: #34495e;
+  border-radius: 8px;
+  padding: 10px 15px;
+  width: 100%;
+  max-width: 400px;
+  margin-top: 5px;
+}
+
+#help-section h3 {
+  font-size: 0.85rem;
+  color: #3498db;
+  margin-bottom: 6px;
+  text-align: center;
+}
+
+#help-section p {
+  font-size: 0.8rem;
+  color: #bdc3c7;
+  margin: 3px 0;
+  line-height: 1.4;
+}
+
+@media (max-width: 480px) and (orientation: portrait) {
+  header h1 {
+    font-size: 1.4rem;
+  }
+
+  #status-bar {
+    font-size: 0.9rem;
+  }
+
+  #game-area {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #game-area #d-pad {
+    display: none;
+  }
+
+  #controls-dpad {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+  }
+
+  #controls {
+    flex-direction: column;
+    width: auto;
+    padding: 0;
+  }
+
+  #d-pad-portrait {
+    display: grid;
+    grid-template-columns: repeat(3, 42px);
+    grid-template-rows: repeat(3, 42px);
+  }
+
+  #d-pad-portrait .d-pad-btn {
+    width: 42px;
+    height: 42px;
+    font-size: 0.85rem;
+  }
+
+  #d-pad-portrait .d-pad-spacer,
+  #d-pad-portrait .d-pad-center {
+    width: 42px;
+    height: 42px;
+  }
+
+  #level-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 480px) and (orientation: landscape) {
+  header h1 {
+    font-size: 1.4rem;
+  }
+
+  #status-bar {
+    font-size: 0.9rem;
+  }
+
+  #d-pad {
+    grid-template-columns: repeat(3, 42px);
+    grid-template-rows: repeat(3, 42px);
+  }
+
+  .d-pad-btn {
+    width: 42px;
+    height: 42px;
+    font-size: 0.85rem;
+  }
+
+  .d-pad-spacer,
+  .d-pad-center {
+    width: 42px;
+    height: 42px;
+  }
+
+  #level-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 481px) {
+  #controls {
+    flex-direction: row;
+  }
+}

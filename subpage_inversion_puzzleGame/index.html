@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'">
+  <link rel="icon" href="favicon.ico">
+  <title>白黒反転パズル</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="app">
+    <header>
+      <h1>白黒反転パズル</h1>
+      <div id="status-bar">
+        <span id="turn-display">目標ターン: 0/0</span>
+        <span id="color-display">色: ○白</span>
+      </div>
+    </header>
+    <main>
+      <div id="game-area">
+        <canvas id="game-canvas"></canvas>
+        <div id="d-pad">
+          <div class="d-pad-spacer"></div>
+          <button class="d-pad-btn" data-dir="up" aria-label="上">▲</button>
+          <div class="d-pad-spacer"></div>
+          <button class="d-pad-btn" data-dir="left" aria-label="左">◀</button>
+          <div class="d-pad-center"></div>
+          <button class="d-pad-btn" data-dir="right" aria-label="右">▶</button>
+          <div class="d-pad-spacer"></div>
+          <button class="d-pad-btn" data-dir="down" aria-label="下">▼</button>
+          <div class="d-pad-spacer"></div>
+        </div>
+      </div>
+      <div id="controls-dpad">
+        <div id="controls">
+          <button id="btn-color-change">色変化</button>
+          <button id="btn-undo">巻き戻し</button>
+          <button id="btn-reset">リセット</button>
+          <button id="btn-level-select">レベル選択</button>
+        </div>
+        <div id="d-pad-portrait">
+          <div class="d-pad-spacer"></div>
+          <button class="d-pad-btn" data-dir="up" aria-label="上">▲</button>
+          <div class="d-pad-spacer"></div>
+          <button class="d-pad-btn" data-dir="left" aria-label="左">◀</button>
+          <div class="d-pad-center"></div>
+          <button class="d-pad-btn" data-dir="right" aria-label="右">▶</button>
+          <div class="d-pad-spacer"></div>
+          <button class="d-pad-btn" data-dir="down" aria-label="下">▼</button>
+          <div class="d-pad-spacer"></div>
+        </div>
+      </div>
+      <div id="help-section">
+        <h3>操作方法</h3>
+        <div id="help-pc" class="hidden">
+          <p>矢印キー / WASD : プレイヤー移動</p>
+          <p>スペース / C : 色変化</p>
+          <p>Z : 巻き戻し</p>
+          <p>R : リセット</p>
+        </div>
+        <div id="help-mobile" class="hidden">
+          <p>十字キーボタン / パズルスワイプ : プレイヤー移動</p>
+          <p>「色変化」ボタン : 色変化</p>
+          <p>「巻き戻し」ボタン : 1ターン戻す</p>
+          <p>「リセット」ボタン : 最初からやり直す</p>
+        </div>
+      </div>
+    </main>
+    <div id="level-select" class="hidden">
+      <h2>レベル選択</h2>
+      <div id="level-grid"></div>
+    </div>
+    <div id="message-overlay" class="hidden">
+      <div id="message-box">
+        <h2 id="message-title"></h2>
+        <p id="message-text"></p>
+        <div id="message-buttons"></div>
+      </div>
+    </div>
+  </div>
+  <script src="js/levels.js"></script>
+  <script src="js/loadlevels.js"></script>
+  <script src="js/render.js"></script>
+  <script src="js/rules.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/input.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

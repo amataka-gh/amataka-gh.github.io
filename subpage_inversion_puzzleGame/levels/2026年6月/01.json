@@ -1,0 +1,111 @@
+{
+    "id": 20260601,
+    "name": "中級者用：色彩の交錯",
+    "width": 7,
+    "height": 7,
+    "maxTurns": 25,
+    "grid": [
+        [
+            "wall",
+            "wall",
+            "wall",
+            "wall",
+            "wall",
+            "wall",
+            "wall"
+        ],
+        [
+            "wall",
+            "floor",
+            "floor",
+            "floor",
+            "floor",
+            "floor",
+            "wall"
+        ],
+        [
+            "wall",
+            "floor",
+            "wall",
+            "wall",
+            "wall",
+            "floor",
+            "wall"
+        ],
+        [
+            "wall",
+            "floor",
+            "floor",
+            "floor",
+            "floor",
+            "floor",
+            "wall"
+        ],
+        [
+            "wall",
+            "floor",
+            "wall",
+            "wall",
+            "wall",
+            "floor",
+            "wall"
+        ],
+        [
+            "wall",
+            "floor",
+            "floor",
+            "floor",
+            "floor",
+            "floor",
+            "wall"
+        ],
+        [
+            "wall",
+            "wall",
+            "wall",
+            "wall",
+            "wall",
+            "wall",
+            "wall"
+        ]
+    ],
+    "player": {
+        "x": 1,
+        "y": 1,
+        "color": "white"
+    },
+    "boxes": [
+        {
+            "x": 3,
+            "y": 1,
+            "color": "black"
+        },
+        {
+            "x": 3,
+            "y": 3,
+            "color": "white"
+        },
+        {
+            "x": 5,
+            "y": 3,
+            "color": "gray"
+        }
+    ],
+    "goals": [
+        {
+            "x": 5,
+            "y": 1,
+            "color": "black"
+        },
+        {
+            "x": 3,
+            "y": 5,
+            "color": "white"
+        },
+        {
+            "x": 1,
+            "y": 5,
+            "color": "black"
+        }
+    ]
+}

@@ -1,0 +1,506 @@
+/* ============================================================
+   Integrated_MySite — サイト全体のスタイル
+   （HTML/CSS は初心者が読みやすいことを最優先に書いています）
+   ------------------------------------------------------------
+   このファイルの構成:
+   0. テーマ(色の設定)
+   1. 基本(リセット・フォント・共通ルール)
+   2. レイアウト(中央寄せのコンテナ等)
+   3. スキップリンク(キーボード用)
+   4. ヘッダー(サイト名・ナビ)
+   5. セクション共通
+   6. 作品紹介(iframe コンテナ)
+   7. フッター
+   8. レスポンシブ(モバイル対応)
+   9. アクセシビリティ
+   ============================================================ */
+
+/* ============================================================
+    0. テーマ(色・フォント・影の設定)
+    ------------------------------
+    色・フォント・影が 1 か所にまとまっていて、後で変えやすいようにしています。
+    「--変数名: 値;」は "CSS 変数(カスタムプロパティ)" と呼ばれ、
+    下で var(--変数名) と書いて使い回します。
+    ============================================================ */
+:root {
+  /*
+   * 配色方針:「派手じゃないけど少しおしゃれに」
+   * ・背景は純白ではなく、あたたかいクリーム色(雑誌のような柔らかさ)
+   * ・アクセントは 1 色だけ鼠緑(くすんだグリーン)にして、リンクや強調にだけ使う
+   */
+
+  /* 背景と文字 */
+  --bg: #faf7f2;
+  /* ページ全体の背景色(クリーム) */
+  --fg: #3a3a35;
+  /* 本文の文字色(あたたかいチャコール) */
+  --fg-muted: #6e6859;
+  /* 薄い文字(説明・フッター)。背景に対して WCAG AA(4.5:1)以上を確保 */
+
+  /*
+   * アクセント(差し色)は 1 色だけ決めて、リンクや強調に使う。
+   * 色味は鼠緑のまま、文字の視認性(WCAG AA 4.5:1)が達する濃さに調整済み。
+   */
+  --accent: #5c7050;
+  /* アクセントのメイン(鼠緑) */
+  --accent-dark: #48593f;
+  /* hover 用の濃い鼠緑 */
+
+  /* カード・枠線・影 */
+  --card: #fffdf9;
+  /* カード(作品カード等)の背景(白より少しクリーム寄り) */
+  --border: #e8e1d5;
+  /* 薄い線の枠線(あたたかいライトグレー) */
+  --shadow-sm: 0 2px 12px rgba(60, 55, 40, 0.06);
+  /* カードの常態のやわらかい影 */
+  --shadow-md: 0 8px 24px rgba(60, 55, 40, 0.10);
+  /* hover 時の少し強めの影 */
+
+  /*
+   * フォントは 2 種類(どちらも端末にもともとあるシステムフォント):
+   * ・見出し(h1/h2/h3)= 明朝系(serif)。雑誌のようなエディトリアルな質感が出る
+   * ・本文(body)= ゴシック系(sans-serif)。読みやすいのでそのまま
+   * 順番は優先順。手前にあるフォントが端末に無い場合は後ろへフォールバックします。
+   */
+  --font-serif: "Yu Mincho", "YuMincho",
+    "Hiragino Mincho ProN", "Hiragino Mincho Pro",
+    "BIZ UDPMincho", "Noto Serif JP", "MS Mincho", serif;
+  --font-sans: system-ui, -apple-system, "Segoe UI",
+    "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+}
+
+/* ============================================================
+   1. 基本(リセット・フォント・共通ルール)
+   ------------------------------------------------------------
+   "リセット" = ブラウザごとに異なる既定の余白を揃えること。
+   ============================================================ */
+
+/* HTML 全体の設定 */
+html {
+  /* リンクにジャンプしたとき、スクロールが滑らかになる */
+  scroll-behavior: smooth;
+  /* ヘッダーが固定で重なる分だけ、ジャンプ位置を上げるための余白 */
+  scroll-padding-top: 6rem;
+}
+
+/* body = 画面全体。余白を 0 にして背景・文字色を決める */
+body {
+  margin: 0;
+  background-color: var(--bg);
+  color: var(--fg);
+
+  /*
+   * フォントは「システムフォント」(端末がもともと持っているフォント)を使う。
+   * インターネットからフォントをダウンロードしないので、
+   * 読み込みが速く、オフラインでもある程度綺麗に表示されます。
+   * 本文はゴシック系(sans-serif)で読みやすいフォント。
+   */
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.6;
+  /* 行間のゆとり。読みやすさのため */
+}
+
+/*
+ * 見出し(h1/h2/h3)だけ明朝系(serif)にする。
+ * 本文のゴシック系(sans-serif)との対比が出ることで、
+ * 「派手じゃないけど少しおしゃれな」雑誌風の質感が出ます。
+ * letter-spacing で字間を少し広げると、明朝はより上品に見えます。
+ */
+h1,
+h2,
+h3 {
+  font-family: var(--font-serif);
+  letter-spacing: 0.02em;
+}
+
+/* リンク共通(色・飾り) */
+a {
+  color: var(--accent);
+  text-decoration: underline;
+  /* 下線があるのはアクセシビリティ上好み */
+  text-underline-offset: 0.2em;
+  /* 下線を少し離して、明朝文字と被らないように */
+}
+
+/* リンクをホバー(マウスをのせる)したときに濃くする */
+a:hover {
+  color: var(--accent-dark);
+}
+
+/* ============================================================
+   2. レイアウト(中央寄せのコンテナ等)
+   ------------------------------------------------------------
+   ウィンドウ幅が広いと、本文が左右に伸びすぎて読みにくいので、
+   コンテナで最大幅を決めて中央寄せにする。
+   ============================================================ */
+
+/* コンテナ = 中身を最大 960px まで中央に置く枠 */
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  /* 左右の余白を自動で等分(=中央寄せ) */
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+/* 見出しの共通(本文の h2) */
+h2 {
+  /*
+   * clamp(下限, 推奨値, 上限) = 画面幅に応じてサイズが滑らかに変化し、
+   * それでも下限〜上限の範囲内に収まる関数。
+   * メディアクエリを増やさずに、スマホ〜大画面まで自然な大きさに見えます。
+   */
+  font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2rem);
+  margin: 0 0 1rem;
+}
+
+/* ============================================================
+   3. スキップリンク(キーボード用)
+   ------------------------------------------------------------
+   キーボードの Tab キーでページを操作する人用。
+   画面の先頭に「本文へスキップ」というリンクを置き、
+   通常は隠していて、フォーカス(選択)されたときだけ見せる。
+   ============================================================ */
+.skip-link {
+  position: absolute;
+  top: -3rem;
+  /* 隠す(画面の上に出す) */
+  left: 1rem;
+  background-color: var(--accent);
+  color: #ffffff;
+  padding: 0.5rem 1rem;
+  border-radius: 0 0 8px 8px;
+  text-decoration: none;
+  z-index: 100;
+}
+
+/* フォーカスされたときだけ見せる */
+.skip-link:focus {
+  top: 0;
+}
+
+/* ============================================================
+   4. ヘッダー(サイト名・ナビ)
+   ------------------------------------------------------------
+   固定(fixed)で、スクロールしても見えるようにする。
+   ============================================================ */
+.site-header {
+  position: sticky;
+  /* 上に来ると止まる。fixed より軽量 */
+  top: 0;
+  z-index: 10;
+  background-color: rgba(250, 247, 242, 0.85);
+  /* クリームの半透明(背景色と同じ系統) */
+  border-bottom: 1px solid var(--border);
+
+  /*
+   * backdrop-filter: ヘッダーの"うしろ"を見ながらぼかす効果。
+   * CSS のみで書けるので、JavaScript 不要。
+   * Safari 系ブラウザ向けの -webkit- 付きも併記しておくと安全です。
+   */
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* ヘッダーの中身は flex 並び(左に名前、右にナビ) */
+.site-header .container {
+  display: flex;
+  align-items: center;
+  /* 縦の中心を揃える */
+  justify-content: space-between;
+  /* 左右に分ける */
+  flex-wrap: wrap;
+  /* 幅が狭いとき、ナビが折り返せるように */
+  gap: 0.5rem 1rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+/* サイト名 h1(見出し共通で明朝系になるため、少し強調) */
+.site-header .site-name {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+/* サイト名をリンクでトップ(#about)までジャンプさせる */
+.site-name a {
+  text-decoration: none;
+  color: var(--fg);
+}
+
+/* ナビの中のリンク */
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  /* 狭いとき折り返す */
+  gap: 0.25rem 1rem;
+}
+
+.nav a {
+  display: inline-block;
+  padding: 0.25rem 0;
+  text-decoration: none;
+  color: var(--fg);
+  font-weight: 500;
+}
+
+/* ナビのリンクにホバーでアクセント色 */
+.nav a:hover {
+  color: var(--accent);
+}
+
+/* ============================================================
+   5. セクション共通
+   ============================================================ */
+.section {
+  /* セクション上下に大きめの余白。広い余白は「呼吸感」と呼ばれ、上品さを生む */
+  padding: 2rem 0;
+}
+
+/* セクション見出し h2
+   太い下線ではなく、::after で"見出しの下の短いアクセント線"を描く。
+   ::after = その要素の"最後"に、見えない箱を 1 つ追加できる擬似要素。
+   全幅の下線より短線の方が、エディトリアル(雑誌風)で洗練された印象になります。 */
+.section-title {
+  color: var(--fg);
+  display: inline-block;
+  position: relative;
+  /* ::after を見出しの座標基準で置くため */
+  padding-bottom: 0.75rem;
+}
+
+/* 短いアクセント線(装飾) */
+.section-title::after {
+  content: "";
+  /* 見える文字を空にする(線だけ出したい) */
+  position: absolute;
+  /* 見出しの真下に重ねて置く */
+  left: 0;
+  bottom: 0;
+  width: 3rem;
+  /* 線は 3rem(48px)だけ。全幅にしない */
+  height: 3px;
+  background-color: var(--accent);
+}
+
+/* セクション見出しの下にある短い説明文 */
+.section-subtitle {
+  margin: 0.75rem 0 0;
+  color: var(--fg-muted);
+}
+
+/* ============================================================
+   6. 作品紹介(iframe コンテナ)
+   ------------------------------------------------------------
+   各作品を「カード」にまとめる。
+   ============================================================ */
+
+/* 作品カード 1 枚(影と角丸で"ふわっとした質感"を出す) */
+.work-card {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  /* 常態のやわらかい影 */
+
+  /*
+   * transition = 状態が変わったとき(こちらへ移動したとき等)、
+   * 値をいきなり切り替えず、時間をかけて滑らかに変化させる指定。
+   * transform と box-shadow の 2 つだけ滑らかにします。
+   */
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* hover(マウスをのせる)したとき、カードが少し浮き上がる。
+   "micro-interaction(微細な動き)"と呼ばれ、サイトが"生きている"印象になります。 */
+.work-card:hover {
+  transform: translateY(-3px);
+  /* 3px だけ上に */
+  box-shadow: var(--shadow-md);
+  /* 影が強くなる → 浮いているように見える */
+}
+
+/* 見出し h3 */
+.work-card h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.375rem;
+}
+
+/* 作品説明 */
+.work-card .work-desc {
+  margin: 0 0 1rem;
+  color: var(--fg-muted);
+}
+
+/* 作品の特長箇条書き（説明の下・iframe/画像の上に出す） */
+.work-card .work-points {
+  margin: 0 0 0.75rem;
+  padding-left: 1.25rem;
+  list-style: square;
+  /* 四角いマーカー */
+}
+
+/* マーカー(■)だけアクセント色に */
+.work-card .work-points li::marker {
+  color: var(--accent);
+}
+
+.work-card .work-points li {
+  margin-bottom: 0.25rem;
+  line-height: 1.5;
+}
+
+/* 使用技術の1行（小さめの補足情報として扱う） */
+.work-card .work-tech {
+  margin: 0 0 1rem;
+  font-size: 0.875rem;
+  color: var(--fg-muted);
+}
+
+/* スクリーンショット(iframe で開けない Drive 作品用)
+   幅はカードいっぱいに伸び、高さは元の比率を保つ */
+.work-card .work-media,
+.work-card .work-gallery {
+  margin: 0 0 0.75rem;
+}
+
+.work-card .work-media img,
+.work-card .work-gallery img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+/* 2枚並べるギャラリー（Unreal Engine 作品用） */
+.work-card .work-gallery {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+/*
+ * 枠 = iframe を包む箱。
+ *
+ * 高さ 560px を「固定」で与えている理由:
+ *   iframe はデフォルトで高さが 150px 程度にしかならないため、
+ *   外側の箱に必ず高さを設定する必要があります。
+ *   本サイトは JavaScript を使わない方針のため、
+ *   内容の高さに合わせるには postMessage を使う必要がありますが、
+ *   それが不可なので、十分大きく固定して
+ *   iframe 内の軽いスクロールは許容する方針にした。
+ * (将来、iframe 内容の高さに自動追従させたい場合は、
+ *  projectManage/progress.md の「iframe 高さ自動調整」へ)
+ */
+.frame-box {
+  width: 100%;
+  height: 560px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  /* 角丸に収めるため */
+  background-color: #ffffff;
+}
+
+.frame-box iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+  /* iframe 下に 1px 余白ができる現象を防ぐ */
+}
+
+/* 「別ウィンドウで開く」リンク */
+.work-card .open-link {
+  display: inline-block;
+  margin-top: 0.5rem;
+  font-size: 0.9375rem;
+}
+
+/* ============================================================
+    7. フッター
+    ============================================================ */
+.site-footer {
+  border-top: 1px solid var(--border);
+  background-color: var(--card);
+  /* 末端だけ少しクリームを濃くして、ページを柔らかく閉じる */
+  padding: 2rem 0;
+  text-align: center;
+  color: var(--fg-muted);
+  font-size: 0.9rem;
+}
+
+/* ============================================================
+    9. レスポンシブ(モバイル対応)
+   ------------------------------------------------------------
+   画面幅 640px 以下(スマホ)で調整する項目だけ書く。
+   "max-width" = 「この幅以下のとき」に効く。
+   ============================================================ */
+@media (max-width: 640px) {
+
+  /* iframe の高さを少し短く(モバイルでは縦が狭い) */
+  .frame-box {
+    height: 420px;
+  }
+
+  /* 作品ギャラリー: モバイルでは2枚の画像を縦積みにする
+     (横の幅が半分にならないよう grid の列を 1 つに) */
+  .work-card .work-gallery {
+    grid-template-columns: 1fr;
+  }
+
+  /* セクションの間隔を狭く */
+  .section {
+    padding: 2.5rem 0;
+  }
+
+  /*
+   * 見出しは h2 に clamp() を使っているため、
+   * 画面が狭くなると自動的に小さくなります(ここで指定は不要)。
+   */
+
+  /* ヘッダーの名前とナビが上下に折り返されることを許容
+     (flex-wrap を上でもつため、特に追加は不要) */
+  .site-header .site-name {
+    width: 100%;
+    /* 名前を 1 行に */
+  }
+}
+
+/* ============================================================
+    10. アクセシビリティ
+    ============================================================ */
+
+/* キーボードでフォーカスしたときだけ太めの輪郭を出す。
+   :focus-visible は「キーボード操作のときだけ」効く。
+   マウスでは出ないので、視覚的にうるさくならない。 */
+a:focus-visible,
+iframe:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/*
+ * 動きに敏感な人への配慮。
+ * prefers-reduced-motion が on の環境では、
+ * スムーズスクロールを無効にして、ジャンプを直進にする。
+ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  /* 動きの演出(カードの浮き上がり・変化)も無効にする */
+  .work-card {
+    transition: none;
+  }
+
+  .work-card:hover {
+    transform: none;
+  }
+}

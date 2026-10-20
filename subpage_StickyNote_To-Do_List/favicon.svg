@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- 付箋本体のドロップシャドウ（右下にわずかにオフセット） -->
+  <path d="M17 10 H51 A7 7 0 0 1 58 17 V45 L45 58 H17 A7 7 0 0 1 10 51 V17 A7 7 0 0 1 17 10 Z" fill="#000" opacity="0.14"/>
+  <!-- 付箋本体（角丸四角・黄色。右下を折り曲げ表現で切り欠き） -->
+  <path d="M15 8 H49 A7 7 0 0 1 56 15 V43 L43 56 H15 A7 7 0 0 1 8 49 V15 A7 7 0 0 1 15 8 Z" fill="#FFD84A"/>
+  <!-- 本体をクリップし、中身のテキスト表現がはみ出さないよう制限 -->
+  <defs>
+    <clipPath id="noteClip">
+      <path d="M15 8 H49 A7 7 0 0 1 56 15 V43 L43 56 H15 A7 7 0 0 1 8 49 V15 A7 7 0 0 1 15 8 Z"/>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#noteClip)">
+    <!-- タイトル（太めのダークバーで表現） -->
+    <rect x="15" y="17" width="22" height="6" rx="3" fill="#6B5210"/>
+    <!-- メモ本文（2 行の淡いバーで表現） -->
+    <rect x="15" y="30" width="33" height="4" rx="2" fill="#E2C64E"/>
+    <rect x="15" y="37" width="25" height="4" rx="2" fill="#E2C64E"/>
+    <!-- フッターバー（実装の bg-black/5 相当の薄い帯＋上境界線） -->
+    <rect x="8" y="45" width="48" height="11" fill="#000" opacity="0.06"/>
+    <rect x="8" y="45" width="48" height="1" fill="#000" opacity="0.12"/>
+    <!-- フッターの操作ボタン 3 つ（左側に小さな点で表現） -->
+    <circle cx="15" cy="50.5" r="2" fill="#000" opacity="0.30"/>
+    <circle cx="22" cy="50.5" r="2" fill="#000" opacity="0.30"/>
+    <circle cx="29" cy="50.5" r="2" fill="#000" opacity="0.30"/>
+    <!-- 削除ボタンの ×（右下） -->
+    <path d="M46 48.5 L50 52.5 M50 48.5 L46 52.5" stroke="#000" opacity="0.45" stroke-width="1.5" stroke-linecap="round"/>
+  </g>
+  <!-- 右下の折れ曲がり（dog-ear）：実装にはないが付箋としての認識性を高める -->
+  <path d="M56 43 L43 56 L43 43 Z" fill="#E7B927"/>
+  <line x1="56" y1="43" x2="43" y2="56" stroke="#000" opacity="0.16" stroke-width="1"/>
+</svg>

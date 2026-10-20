@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>自作アプリ ポートフォリオ</title>
+  <meta name="description" content="自作アプリ4作品（反転パズルゲーム・付箋メモ帳・その他2作品は Google Drive リンク）を紹介するポートフォリオサイトです。">
+  <!-- ファビコン(ブラウザのタブに表示される小アイコン)
+       背景 #faf7f2 に #5c7050 の左上→右下スラッシュ。
+       生成スクリプト: 直下フォルダの gen_favicon.py (16/32/48/64px) -->
+  <link rel="icon" href="favicon.ico">
+
+  <!-- CSP(防御の二重化): このページは JS を使わず、読むのは style.css と iframe(同一フォルダ)のみなので、
+       同一オリジンの 'self' のみ許可する。
+       - 外部リンク(Google Drive 等)はクリックによるナビゲーションのため CSP の対象外。
+       - メールを mailto: リンクで掲載した場合は、frame-src に mailto: を併記して再有効化が必要。
+- 注意: frame-ancestors(このページを誰が iframe に埋め込めるかの制限)は meta では無視される仕様。
+          GitHub Pages はレスポンスヘッダを設定できないため、frame-ancestors は未設定(projectManage/05 文書参照)。 -->
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; frame-src 'self'; object-src 'none'; base-uri 'self'">
+
+  <!-- サイト全体のスタイル CSS(このページで外部から読むのはこの 1 ファイルだけ) -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- キーボードの Tab キーで「本文へスキップ」できるようにするリンク
+       (マウスでは見えない、キーボードでフォーカスしたときだけ表示) -->
+  <a class="skip-link" href="#main">本文へスキップ</a>
+
+  <!-- ============================================================
+       ヘッダー(ヘッダーはスクロールしても上に見えるように sticky)
+       ============================================================ -->
+  <header class="site-header">
+    <div class="container">
+      <h1 class="site-name">
+        <a href="#about">自作アプリ ポートフォリオ</a>
+      </h1>
+
+      <!-- ナビゲーション(各セクションへのジャンプリンク) -->
+      <nav class="nav" aria-label="ページ内ナビ">
+        <a href="#about">トップ</a>
+        <a href="#works">作品</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       メイン(ページ本体)
+       ============================================================ -->
+  <main id="main">
+
+    <!-- ------------------------------------------------------------
+         セクション 1: トップ(軽い自己紹介+サイト案内)
+         ------------------------------------------------------------ -->
+    <section class="section" id="about">
+      <div class="container">
+        <h2 class="section-title">トップ</h2>
+        <p>
+          こんにちは。このサイトで紹介しているアプリの開発者です。<br>
+          このサイトは、私が自作した4作品を紹介するポートフォリオです。<br>
+          どうぞご覧ください。
+        </p>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------------
+         セクション 2: 作品紹介(iframe × 2 + Google Drive リンク × 2)
+         ------------------------------------------------------------ -->
+    <section class="section" id="works">
+      <div class="container">
+        <h2 class="section-title">作品紹介</h2>
+        <p class="section-subtitle">
+          自作アプリを4作品紹介しています。うち2作品はこのページ内（iframe）でそのまま体験でき、
+          残り2作品は Google Drive のリンクからダウンロード・体験できます。
+        </p>
+
+        <!-- 作品 1: 付箋メモ帳 -->
+        <article class="work-card">
+          <h3>付箋メモ帳</h3>
+          <p class="work-desc">
+            無限キャンバス上に付箋を自由に配置・管理できるメモ帳アプリです。<br>
+            ログインやサーバーが不要で、全データを端末に自動保存します。<br>
+            開発は生成AIの支援で行いました。
+          </p>
+          <ul class="work-points">
+            <li>無限キャンバスのパン/ズーム（ホイール・ドラッグ操作）</li>
+            <li>付箋のドラッグ移動・4辺リサイズ・右クリックメニューでの即時配置</li>
+            <li>タイトル・メモ・タグ・チェックタスク・期限・色・サイズの管理</li>
+            <li>端末への自動保存 + JSON ファイルでのエクスポート/インポート</li>
+          </ul>
+          <p class="work-tech">技術: Vue 3（Composition API）/ TypeScript / Pinia / Vite / Tailwind CSS</p>
+
+          <!-- iframe = 別のページを「枠」の中に埋め込むための要素
+                title: スクリーンリーダー(画面の音声読み上げ)に作品の内容を伝えるための説明
+                loading="lazy": 画面に近づいてから読み込む遅延読み込み
+               sandbox は付けない(理由は下) -->
+          <!-- 作品は同一オリジン(同じフォルダ)にあるため、
+               sandbox(iframe の権限制限)は不要です。
+               付箋メモ帳は localStorage を使うため、仮に sandbox を付けた場合は
+               allow-same-origin を併用する必要があります(付けない方針)。 -->
+          <!-- 注意: 付箋メモ帳は type="module" のため file:// では開けず
+               確認は HTTP サーバーで行ってください。
+               (詳細は projectManage/04-embed-sticky-note.md) -->
+          <div class="frame-box">
+            <iframe src="subpage_StickyNote_To-Do_List/" title="付箋メモ帳のデモ" loading="lazy">
+            </iframe>
+          </div>
+
+          <!-- iframe が開けない場合への保険として、別ウィンドウで開くリンク -->
+          <a class="open-link" href="subpage_StickyNote_To-Do_List/">
+            別ウィンドウで開く →
+          </a>
+        </article>
+
+        <!-- 作品 2: 反転パズルゲーム -->
+        <article class="work-card">
+          <h3>反転パズルゲーム</h3>
+          <p class="work-desc">
+            荷物を動かすソコバンと、同色で挟んだ石を反転させるリバーシを融合した<br>
+            オリジナルパズルです。「同居 RIDE・押し込み PUSH・挟み反転」の3移動を使い分け、<br>
+            目標ターン数内にゴールに対応色の箱を揃えます。<br>
+            開発は生成AIの支援で行いました。
+          </p>
+          <ul class="work-points">
+            <li>BFS ソルバー（Web版）で全レベルの「解けること」を機械的に検証</li>
+            <li>AI レベル生成パイプライン（現在保留中）向けに C++ 高速 BFS ソルバー（DLL・依存ゼロ）も実装</li>
+            <li>レベルエディター同梱（レベルデータは JSON スキーマで統一）</li>
+            <li>PC（キーボード）/ モバイル（十字キー・スワイプ）両対応</li>
+          </ul>
+          <p class="work-tech">技術: Vanilla JS + HTML5 Canvas（フレームワーク・ビルドツール不使用）/ C++ ソルバー / JSON</p>
+
+          <!-- iframe (上の付箋メモ帳と同じ理由で sandbox なし)
+               作品は「白黒パズルゲーム」自体が同一オリジン(同じフォルダ)にあるため、
+               sandbox(iframe の権限制限)は不要です。 -->
+          <div class="frame-box">
+            <iframe src="subpage_inversion_puzzleGame/" title="白黒反転パズルゲームのデモ(白黒反転×リバーシ)" loading="lazy">
+            </iframe>
+          </div>
+
+          <a class="open-link" href="subpage_inversion_puzzleGame/">
+            別ウィンドウで開く →
+          </a>
+        </article>
+
+        <!-- 作品 3: 俯瞰型シューティングローグライク(Google Drive リンク)
+             iframe で埋め込めないので、名前・説明・Drive リンクのみ提示する。
+             外部リンクなので target="_blank" rel="noopener" を付ける。 -->
+        <article class="work-card">
+          <h3>俯瞰型シューティングローグライク</h3>
+          <p class="work-desc">
+            無限の階層で最高記録を目指す2Dリアルタイムシューティングローグライク。<br>
+            画像・音声など全アセットをコードで手続き的に生成しており、外部素材ファイルはゼロです。<br>
+            開発は生成AIの支援で行いました。
+          </p>
+          <ul class="work-points">
+            <li>Procedural ダンジョン生成（フラッドフィルによる接続性保証）</li>
+            <li>BFS フローフィールドによる敵 AI（6種+ボス、階層で数値スケーリング）</li>
+            <li>レイキャストによる視界（FOV）判定で、視界外は完全非表示</li>
+            <li>SFX 10種・BGM を numpy で周波数合成 / headless 自動スモークテスト</li>
+          </ul>
+          <p class="work-tech">技術: Python 3 / pygame / numpy / PyInstaller（1 exe で配布）</p>
+          <!-- スクリーンショット(作品のサムネイル。同じフォルダ内なので CSP は変更不要) -->
+          <div class="work-media">
+            <img src="images/shooter-roguelike.png"
+              alt="俯瞰型シューティングローグライクのスクリーンショット（暗いダンジョン・ネオン風のドットキャラ・右下のミニマップ）"
+              loading="lazy">
+          </div>
+          <a class="open-link" href="https://drive.google.com/file/d/1xkpP_lIa9QJGqptc31HvReGniFCcrPeO/view?usp=sharing"
+            target="_blank" rel="noopener">
+            Google Drive で開く →
+          </a>
+        </article>
+
+        <!-- 作品 4: Unreal Engine 製アプリ集(zip・Google Drive リンク)
+             同様に iframe なしで、Drive リンクからダウンロードして体験する形。 -->
+        <article class="work-card">
+          <h3>Unreal Engine 製アプリ2つ</h3>
+          <p class="work-desc">
+            昔 Unreal Engine で作成した 3D エンドレスランゲーム・3D パズルゲームです。
+          </p>
+          <!-- 2作品のスクリーンショットを横に2枚並べて提示 -->
+          <div class="work-gallery">
+            <img src="images/ue4-endless-runner.png" alt="Unreal Engine 製の3D エンドレスランゲームのスクリーンショット" loading="lazy">
+            <img src="images/ue4-puzzle.png" alt="Unreal Engine 製の3D パズルゲームのスクリーンショット" loading="lazy">
+          </div>
+          <a class="open-link" href="https://drive.google.com/file/d/1MQ4qNojA8Aj94VcCPi1uTk0CzJrMk6jt/view?usp=sharing"
+            target="_blank" rel="noopener">
+            Google Drive で開く →
+          </a>
+        </article>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================================
+       フッター(ページの一番下)
+       ============================================================ -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>本ページの作品・画像の無断転載を禁じます。</p>
+    </div>
+  </footer>
+
+</body>
+
+</html>
