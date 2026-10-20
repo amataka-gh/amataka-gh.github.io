@@ -4,7 +4,7 @@
 
 ## ライブサイト
 
-- https://<username>.github.io/
+- https://amataka-gh.github.io/
 
 ## 技術スタック
 
